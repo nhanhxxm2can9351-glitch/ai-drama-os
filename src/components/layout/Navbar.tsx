@@ -76,20 +76,19 @@ export default function Navbar() {
                 <div className="relative w-10 h-10">
                   <svg viewBox="0 0 48 48" className="w-full h-full">
                     <path 
-                      d="M12 24c0-6.627 5.373-12 12-12v4c-4.418 0-8 3.582-8 8s3.582 8 8 8v4c-6.627 0-12-5.373-12-12z" 
-                      fill="#3B82F6" 
+                      d="M14 10 L34 10 L34 38 L26 30 L14 38 Z" 
+                      fill="url(#logoGradient)" 
                     />
                     <path 
-                      d="M36 24c0-6.627-5.373-12-12-12v4c4.418 0 8 3.582 8 8s-3.582 8-8 8v4c6.627 0 12-5.373 12-12z" 
-                      fill="#2563EB" 
+                      d="M22 30 L30 24 L38 30" 
+                      fill="#F97316" 
                     />
-                    <path 
-                      d="M20 36l8-4 8 4" 
-                      stroke="#F97316" 
-                      strokeWidth="4" 
-                      strokeLinecap="round" 
-                      fill="none"
-                    />
+                    <defs>
+                      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#3B82F6" />
+                        <stop offset="100%" stopColor="#2563EB" />
+                      </linearGradient>
+                    </defs>
                   </svg>
                 </div>
                 <div className="flex flex-col">
