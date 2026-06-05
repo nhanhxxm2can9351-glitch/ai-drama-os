@@ -47,8 +47,8 @@ const sidebarItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
-  const [sidebarHidden, setSidebarHidden] = useState(true);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarHidden, setSidebarHidden] = useState(false);
   const location = useLocation();
 
   const toggleSidebar = () => {
