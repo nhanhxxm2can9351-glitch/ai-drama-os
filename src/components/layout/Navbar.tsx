@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronLeft, ChevronRight, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User, Sparkles, Target, Database, Cpu, GitBranch, Users, Grid3X3, Building2, Rocket } from 'lucide-react';
+import { Menu, X, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User, Sparkles, Target, Database, Cpu, GitBranch, Users, Grid3X3, Building2, Rocket } from 'lucide-react';
 import { useState } from 'react';
 
 const mainNavItems = [
@@ -30,13 +30,12 @@ const otherNavItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/8 backdrop-blur-xl border-b border-gray-100 transition-all duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
           <Link to="/" className="flex items-center gap-3">
             <div className="relative w-10 h-10">
               <svg viewBox="0 0 48 48" className="w-full h-full">
@@ -57,13 +56,13 @@ export default function Navbar() {
                 />
               </svg>
             </div>
-            <div className={`flex flex-col transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
+            <div className="flex flex-col">
               <span className="font-bold text-lg text-gray-900 tracking-tight">星捷AI Drama OS</span>
               <span className="text-xs text-gray-500 -mt-1">智能短剧创作平台</span>
             </div>
           </Link>
 
-          <div className={`hidden xl:flex items-center flex-1 max-w-xl mx-8 transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
+          <div className="hidden md:flex items-center gap-2">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
               searchFocused ? 'border-blue-500 shadow-lg shadow-blue-500/20' : 'border-gray-200 bg-gray-50'
             }`}>
@@ -71,14 +70,34 @@ export default function Navbar() {
               <input
                 type="text"
                 placeholder="搜索剧本、分镜、素材..."
-                className="bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 w-full"
+                className="bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 w-48"
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setSearchFocused(false)}
               />
             </div>
           </div>
 
-          <div className={`hidden lg:flex items-center gap-1 transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
+          <div className="flex items-center gap-3">
+            <button className="flex items-center gap-2 px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all">
+              <User className="w-5 h-5" />
+              <span className="text-sm font-medium hidden sm:inline">登录</span>
+            </button>
+            <button className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30">
+              <span className="hidden sm:inline">免费试用</span>
+              <span className="sm:hidden">试用</span>
+            </button>
+            
+            <button
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+
+        <div className="hidden lg:block border-t border-gray-100">
+          <div className="flex items-center gap-1 py-3 overflow-x-auto scrollbar-hide">
             {mainNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -86,30 +105,9 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/30'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
-            
-            <div className="w-px h-6 bg-gray-200 mx-2 flex-shrink-0" />
-            
-            {designNavItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.path;
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                    isActive
-                      ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg shadow-green-500/30'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
@@ -127,7 +125,7 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                     location.pathname === item.path
                       ? 'bg-blue-500 text-white'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -139,32 +137,28 @@ export default function Navbar() {
               );
             })}
           </div>
+        </div>
 
-          <div className={`hidden lg:flex items-center gap-3 transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
-            <button className="flex items-center gap-2 px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all">
-              <User className="w-5 h-5" />
-              <span className="text-sm font-medium">登录</span>
-            </button>
-            <button className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30">
-              免费试用
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              className="hidden lg:flex p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all"
-              onClick={() => setCollapsed(!collapsed)}
-              title={collapsed ? '展开导航栏' : '收缩导航栏'}
-            >
-              {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
-            </button>
-            
-            <button
-              className="lg:hidden p-2 text-gray-600 hover:text-gray-900"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+        <div className="hidden xl:block border-t border-gray-100">
+          <div className="flex items-center gap-1 py-3 overflow-x-auto scrollbar-hide">
+            {designNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                    isActive
+                      ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg shadow-green-500/30'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
 
@@ -248,15 +242,6 @@ export default function Navbar() {
                     </Link>
                   );
                 })}
-              </div>
-              
-              <div className="flex gap-2 mt-2 px-4">
-                <button className="flex-1 px-4 py-3 text-gray-600 bg-gray-100 rounded-xl font-medium hover:bg-gray-200 transition-all">
-                  登录
-                </button>
-                <button className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all">
-                  免费试用
-                </button>
               </div>
             </div>
           </div>
