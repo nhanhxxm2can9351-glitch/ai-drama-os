@@ -53,8 +53,8 @@ export default function Navbar() {
 
   const toggleSidebar = () => {
     setSidebarHidden(!sidebarHidden);
-    if (!sidebarHidden) {
-      setSidebarCollapsed(true);
+    if (sidebarHidden) {
+      setSidebarCollapsed(false);
     }
   };
 
