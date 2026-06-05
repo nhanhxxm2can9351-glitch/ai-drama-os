@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, Film, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard } from 'lucide-react';
+import { Menu, X, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User } from 'lucide-react';
 import { useState } from 'react';
 
 const mainNavItems = [
@@ -16,21 +16,53 @@ const otherNavItems = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-700/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/8 backdrop-blur-xl border-b border-gray-100">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
-              <Film className="w-6 h-6 text-white" />
+            <div className="relative w-10 h-10">
+              <svg viewBox="0 0 48 48" className="w-full h-full">
+                <path 
+                  d="M12 24c0-6.627 5.373-12 12-12v4c-4.418 0-8 3.582-8 8s3.582 8 8 8v4c-6.627 0-12-5.373-12-12z" 
+                  fill="#2563EB" 
+                />
+                <path 
+                  d="M36 24c0-6.627-5.373-12-12-12v4c4.418 0 8 3.582 8 8s-3.582 8-8 8v4c6.627 0 12-5.373 12-12z" 
+                  fill="#1D4ED8" 
+                />
+                <path 
+                  d="M20 36l8-4 8 4" 
+                  stroke="#F97316" 
+                  strokeWidth="4" 
+                  strokeLinecap="round" 
+                  fill="none"
+                />
+              </svg>
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-lg text-white tracking-tight">星捷AI Drama OS</span>
+              <span className="font-bold text-lg text-gray-900 tracking-tight">星捷AI Drama OS</span>
               <span className="text-xs text-gray-500 -mt-1">智能短剧创作平台</span>
             </div>
           </Link>
+
+          <div className="hidden lg:flex items-center flex-1 max-w-xl mx-8">
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
+              searchFocused ? 'border-blue-500 shadow-lg shadow-blue-500/20' : 'border-gray-200 bg-gray-50'
+            }`}>
+              <Search className="w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="搜索剧本、分镜、素材..."
+                className="bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 w-full"
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setSearchFocused(false)}
+              />
+            </div>
+          </div>
 
           <div className="hidden lg:flex items-center gap-1">
             {mainNavItems.map((item) => {
@@ -40,10 +72,10 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white shadow-lg shadow-purple-500/10'
-                      : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/30'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -52,7 +84,7 @@ export default function Navbar() {
               );
             })}
             
-            <div className="w-px h-8 bg-gray-700 mx-2" />
+            <div className="w-px h-6 bg-gray-200 mx-2" />
             
             {otherNavItems.map((item) => {
               const Icon = item.icon;
@@ -60,10 +92,10 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     location.pathname === item.path
-                      ? 'bg-blue-500/20 text-blue-400'
-                      : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                      ? 'bg-blue-500 text-white'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -74,13 +106,17 @@ export default function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <button className="px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-medium hover:from-purple-600 hover:to-pink-700 transition-all transform hover:scale-105 shadow-lg shadow-purple-500/30">
-              开始创作
+            <button className="flex items-center gap-2 px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all">
+              <User className="w-5 h-5" />
+              <span className="text-sm font-medium">登录</span>
+            </button>
+            <button className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30">
+              免费试用
             </button>
           </div>
 
           <button
-            className="lg:hidden p-2 text-gray-400 hover:text-white"
+            className="lg:hidden p-2 text-gray-600 hover:text-gray-900"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -88,8 +124,16 @@ export default function Navbar() {
         </div>
 
         {isOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-700/50">
+          <div className="lg:hidden py-4 border-t border-gray-100">
             <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
+                <Search className="w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="搜索剧本、分镜、素材..."
+                  className="bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 w-full"
+                />
+              </div>
               {mainNavItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -99,8 +143,8 @@ export default function Navbar() {
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       location.pathname === item.path
-                        ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -117,8 +161,8 @@ export default function Navbar() {
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       location.pathname === item.path
-                        ? 'bg-blue-500/20 text-blue-400'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                        ? 'bg-blue-500 text-white'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -126,9 +170,14 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <button className="mt-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-medium hover:from-purple-600 hover:to-pink-700 transition-all">
-                开始创作
-              </button>
+              <div className="flex gap-2 mt-2">
+                <button className="flex-1 px-4 py-3 text-gray-600 bg-gray-100 rounded-xl font-medium hover:bg-gray-200 transition-all">
+                  登录
+                </button>
+                <button className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all">
+                  免费试用
+                </button>
+              </div>
             </div>
           </div>
         )}
