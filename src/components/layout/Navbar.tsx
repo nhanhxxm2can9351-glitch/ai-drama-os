@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User, Sparkles, Target, Database, Cpu, GitBranch, Users, Grid3X3, Building2, Rocket } from 'lucide-react';
+import { Menu, X, ChevronLeft, ChevronRight, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User, Sparkles, Target, Database, Cpu, GitBranch, Users, Grid3X3, Building2, Rocket } from 'lucide-react';
 import { useState } from 'react';
 
 const mainNavItems = [
@@ -30,10 +30,11 @@ const otherNavItems = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/8 backdrop-blur-xl border-b border-gray-100">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/8 backdrop-blur-xl border-b border-gray-100 transition-all duration-300">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3">
@@ -56,13 +57,13 @@ export default function Navbar() {
                 />
               </svg>
             </div>
-            <div className="flex flex-col">
+            <div className={`flex flex-col transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
               <span className="font-bold text-lg text-gray-900 tracking-tight">星捷AI Drama OS</span>
               <span className="text-xs text-gray-500 -mt-1">智能短剧创作平台</span>
             </div>
           </Link>
 
-          <div className="hidden xl:flex items-center flex-1 max-w-xl mx-8">
+          <div className={`hidden xl:flex items-center flex-1 max-w-xl mx-8 transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
               searchFocused ? 'border-blue-500 shadow-lg shadow-blue-500/20' : 'border-gray-200 bg-gray-50'
             }`}>
@@ -77,7 +78,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="hidden lg:flex items-center gap-1 overflow-x-auto py-2 -mx-4 px-4 scrollbar-hide">
+          <div className={`hidden lg:flex items-center gap-1 transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
             {mainNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -139,7 +140,7 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="hidden lg:flex items-center gap-3">
+          <div className={`hidden lg:flex items-center gap-3 transition-all duration-300 ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
             <button className="flex items-center gap-2 px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all">
               <User className="w-5 h-5" />
               <span className="text-sm font-medium">登录</span>
@@ -149,12 +150,22 @@ export default function Navbar() {
             </button>
           </div>
 
-          <button
-            className="lg:hidden p-2 text-gray-600 hover:text-gray-900"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              className="hidden lg:flex p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-all"
+              onClick={() => setCollapsed(!collapsed)}
+              title={collapsed ? '展开导航栏' : '收缩导航栏'}
+            >
+              {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+            </button>
+            
+            <button
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {isOpen && (
