@@ -4,6 +4,11 @@ import { useState } from 'react';
 
 const navItems = [
   { path: '/', label: '剧本生成器' },
+  { path: '/storyboard', label: '分镜生成器' },
+  { path: '/assets', label: '资产生成器' },
+  { path: '/voice', label: '配音生成器' },
+  { path: '/video', label: '视频生成器' },
+  { path: '/tutorial', label: '使用教程' },
   { path: '/cover', label: '封面' },
   { path: '/overview', label: '总览' },
   { path: '/roadmap', label: '路线图' },
