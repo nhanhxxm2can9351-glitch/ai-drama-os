@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
+import { ScriptGenerator } from "@/components/ScriptGenerator";
 import Cover from "@/pages/Cover";
 import Overview from "@/pages/Overview";
 import Architecture from "@/pages/Architecture";
@@ -17,7 +18,8 @@ export default function App() {
       <div className="min-h-screen">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Cover />} />
+          <Route path="/" element={<ScriptGenerator />} />
+          <Route path="/cover" element={<Cover />} />
           <Route path="/overview" element={<Overview />} />
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/protocol" element={<Protocol />} />
