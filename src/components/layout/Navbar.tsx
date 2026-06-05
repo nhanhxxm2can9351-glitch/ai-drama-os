@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User } from 'lucide-react';
+import { Menu, X, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User, Sparkles, Target, Database, Cpu, GitBranch, Users, Grid3X3, Building2, Rocket } from 'lucide-react';
 import { useState } from 'react';
 
 const mainNavItems = [
@@ -8,6 +8,19 @@ const mainNavItems = [
   { path: '/assets', label: '资产生成', icon: LayoutDashboard },
   { path: '/voice', label: '配音制作', icon: Music },
   { path: '/video', label: '视频合成', icon: Video },
+];
+
+const designNavItems = [
+  { path: '/cover', label: '封面', icon: Sparkles },
+  { path: '/overview', label: '总览', icon: Target },
+  { path: '/roadmap', label: '路线图', icon: Rocket },
+  { path: '/protocol', label: '数据协议', icon: Database },
+  { path: '/architecture', label: '系统架构', icon: Cpu },
+  { path: '/workflow', label: '工作流', icon: GitBranch },
+  { path: '/agents', label: 'Agent团队', icon: Users },
+  { path: '/canvas', label: '无限画布', icon: Grid3X3 },
+  { path: '/commercial', label: '商业化', icon: Building2 },
+  { path: '/devplan', label: '开发计划', icon: Target },
 ];
 
 const otherNavItems = [
@@ -49,7 +62,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden lg:flex items-center flex-1 max-w-xl mx-8">
+          <div className="hidden xl:flex items-center flex-1 max-w-xl mx-8">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
               searchFocused ? 'border-blue-500 shadow-lg shadow-blue-500/20' : 'border-gray-200 bg-gray-50'
             }`}>
@@ -64,7 +77,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1 overflow-x-auto py-2 -mx-4 px-4 scrollbar-hide">
             {mainNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -72,7 +85,7 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                     isActive
                       ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/30'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -84,7 +97,28 @@ export default function Navbar() {
               );
             })}
             
-            <div className="w-px h-6 bg-gray-200 mx-2" />
+            <div className="w-px h-6 bg-gray-200 mx-2 flex-shrink-0" />
+            
+            {designNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                    isActive
+                      ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg shadow-green-500/30'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.label}
+                </Link>
+              );
+            })}
+            
+            <div className="w-px h-6 bg-gray-200 mx-2 flex-shrink-0" />
             
             {otherNavItems.map((item) => {
               const Icon = item.icon;
@@ -92,7 +126,7 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                     location.pathname === item.path
                       ? 'bg-blue-500 text-white'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
@@ -124,7 +158,7 @@ export default function Navbar() {
         </div>
 
         {isOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-100">
+          <div className="lg:hidden py-4 border-t border-gray-100 max-h-[calc(100vh-64px)] overflow-y-auto">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
                 <Search className="w-4 h-4 text-gray-400" />
@@ -134,43 +168,78 @@ export default function Navbar() {
                   className="bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 w-full"
                 />
               </div>
-              {mainNavItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      location.pathname === item.path
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-              {otherNavItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      location.pathname === item.path
-                        ? 'bg-blue-500 text-white'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-              <div className="flex gap-2 mt-2">
+              
+              <div className="px-4 py-2">
+                <span className="text-xs text-gray-500 font-medium">核心功能</span>
+                <div className="flex flex-col gap-1 mt-2">
+                  {mainNavItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                          location.pathname === item.path
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Icon className="w-5 h-5" />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div className="px-4 py-2">
+                <span className="text-xs text-gray-500 font-medium">设计文档</span>
+                <div className="flex flex-col gap-1 mt-2">
+                  {designNavItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                          location.pathname === item.path
+                            ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white'
+                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Icon className="w-5 h-5" />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div className="px-4 py-2">
+                <span className="text-xs text-gray-500 font-medium">其他</span>
+                {otherNavItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                        location.pathname === item.path
+                          ? 'bg-blue-500 text-white'
+                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+              
+              <div className="flex gap-2 mt-2 px-4">
                 <button className="flex-1 px-4 py-3 text-gray-600 bg-gray-100 rounded-xl font-medium hover:bg-gray-200 transition-all">
                   登录
                 </button>
