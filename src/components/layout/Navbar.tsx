@@ -81,7 +81,7 @@ export default function Navbar() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold text-lg text-white tracking-tight">星捷AI Drama OS</span>
+                  <span className="font-bold text-lg text-white tracking-tight">Xingjie 星捷 AI Drama OS</span>
                   <span className="text-xs text-gray-400 -mt-1">智能短剧创作平台</span>
                 </div>
               </Link>
