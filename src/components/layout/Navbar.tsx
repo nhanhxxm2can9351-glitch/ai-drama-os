@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronLeft, ChevronRight, BookOpen, Palette, Music, Video, HelpCircle, LayoutDashboard, Search, User, Bell, Settings, Sparkles, Target, Database, Cpu, GitBranch, Users, Grid3X3, Building2, Rocket, Zap } from 'lucide-react';
 import { useState } from 'react';
+import Logo from '../assets/logo.svg';
 
 const topNavItems = [
   { path: '/', label: '首页' },
@@ -74,16 +75,11 @@ export default function Navbar() {
               
               <Link to="/" className="flex items-center gap-3">
                 <div className="relative w-10 h-10">
-                  <svg viewBox="0 0 48 48" className="w-full h-full">
-                    <path 
-                      d="M12 14 Q36 14 36 32 L28 26 L12 36 Z" 
-                      fill="#2563EB" 
-                    />
-                    <path 
-                      d="M20 36 L28 30 L36 36" 
-                      fill="#F97316" 
-                    />
-                  </svg>
+                  <img 
+                    src={Logo} 
+                    alt="星捷AI Drama OS" 
+                    className="w-full h-full object-contain" 
+                  />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-bold text-lg text-white tracking-tight">星捷AI Drama OS</span>
